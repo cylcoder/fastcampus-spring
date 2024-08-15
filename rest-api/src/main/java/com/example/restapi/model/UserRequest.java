@@ -15,5 +15,6 @@ public class UserRequest {
     private String name;
     private String phoneNumber;
     private String emailAddress;
+    private Boolean isKorean;
 
 }

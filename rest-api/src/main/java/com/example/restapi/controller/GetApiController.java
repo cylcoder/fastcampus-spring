@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class RestApiController {
+public class GetApiController {
 
     // http://localhost:8080/api/book1?category=IT&issuedYear=2023&issued-month=01&issued_day=31
     @GetMapping("/book1")
