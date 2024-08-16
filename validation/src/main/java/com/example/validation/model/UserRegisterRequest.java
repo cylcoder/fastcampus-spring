@@ -1,7 +1,6 @@
 package com.example.validation.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.example.validation.annotation.PhoneNumber;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static com.fasterxml.jackson.databind.PropertyNamingStrategies.*;
+import static com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,12 +19,11 @@ import static com.fasterxml.jackson.databind.PropertyNamingStrategies.*;
 @JsonNaming(SnakeCaseStrategy.class)
 public class UserRegisterRequest {
 
-    @NotNull // != null
-    @NotEmpty // != null && != ""
-    @NotBlank // != null && != "" && != "  "
     private String name;
 
-    @Size(min = 4, max = 8) // 4-8 자리의 비밀번호
+    private String nickName;
+
+    @Size(min = 4, max = 8)
     @NotBlank
     private String password;
 
@@ -37,10 +35,24 @@ public class UserRegisterRequest {
     @Email
     private String email;
 
-    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "휴대폰 번호 형식에 맞지 않습니다.")
+//    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "휴대폰 번호 형식에 맞지 않습니다.")
+    @PhoneNumber
     private String phoneNumber;
 
     @FutureOrPresent
     private LocalDateTime registerAt;
+
+    @AssertTrue(message = "이름 또는 닉네임을 입력해야 합니다.")
+    public boolean isNameCheck() { // isXXX 형식이여야 함
+        if (name != null && !name.isBlank()) {
+            return true;
+        }
+
+        if (nickName != null && !nickName.isBlank()) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
