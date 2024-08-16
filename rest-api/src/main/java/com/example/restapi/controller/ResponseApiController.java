@@ -16,10 +16,10 @@ public class ResponseApiController {
     @GetMapping
     public ResponseEntity<UserRequest> user() {
         UserRequest user = new UserRequest();
-        user.setName("John");
+        /*user.setName("John");
         user.setEmailAddress("john@gmail.com");
         user.setIsKorean(true);
-        user.setPhoneNumber("010-2510-1431");
+        user.setPhoneNumber("010-2510-1431");*/
 
         return ResponseEntity
                 .status(HttpStatus.OK)
