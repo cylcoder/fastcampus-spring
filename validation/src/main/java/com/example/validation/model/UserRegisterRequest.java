@@ -1,6 +1,7 @@
 package com.example.validation.model;
 
 import com.example.validation.annotation.PhoneNumber;
+import com.example.validation.annotation.YearMonth;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -41,6 +42,9 @@ public class UserRegisterRequest {
 
     @FutureOrPresent
     private LocalDateTime registerAt;
+
+    @YearMonth(pattern = "yyyy-MM")
+    private String birthDayYearMonth;
 
     @AssertTrue(message = "이름 또는 닉네임을 입력해야 합니다.")
     public boolean isNameCheck() { // isXXX 형식이여야 함
