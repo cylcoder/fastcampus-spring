@@ -35,4 +35,14 @@ public class UserApiController {
         return userService.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
+    @GetMapping("/score")
+    public List<UserEntity> filterScore(int score) {
+        return userService.filterScore(score);
+    }
+
+    @GetMapping("/min_max")
+    public List<UserEntity> filterScore(int min, int max) {
+        return userService.filterScore(min, max);
+    }
+
 }
