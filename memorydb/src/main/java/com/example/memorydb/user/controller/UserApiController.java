@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,6 +23,21 @@ public class UserApiController {
     @GetMapping("/all")
     public List<UserEntity> findAll() {
         return userService.findAll();
+    }
+
+    @DeleteMapping("/id/{id}")
+    public void delete(@PathVariable Long id) {
+        userService.delete(id);
+    }
+
+    @GetMapping("/id/{id}")
+    public UserEntity findOne(@PathVariable Long id) {
+        return userService.findById(id).orElseThrow(NoSuchElementException::new);
+    }
+
+    @GetMapping("/score")
+    public List<UserEntity> filterScore(int score) {
+        return userService.filterScore(score);
     }
 
 }
