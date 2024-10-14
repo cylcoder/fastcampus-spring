@@ -1,19 +1,25 @@
 package com.example.memorydb.book.db.entity;
 
-import com.example.memorydb.entity.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class BookEntity extends Entity {
+@Entity(name = "book")
+public class BookEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
+
     private String category;
+
     private BigDecimal amount;
 
 }

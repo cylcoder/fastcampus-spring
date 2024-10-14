@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -23,15 +24,11 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     public Optional<UserEntity> findById(Long id) {
         return userRepository.findById(id);
-    }
-
-    public List<UserEntity> filterScore(int score) {
-        return userRepository.findAllScoreGreaterThan(score);
     }
 
 }
