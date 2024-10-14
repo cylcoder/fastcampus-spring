@@ -8,7 +8,7 @@ public abstract class SimpleDataRepository<T extends Entity, ID extends Long> im
 
     private List<T> dataList = new ArrayList<>();
 
-    private static long index = 0;
+    private static long index = 1;
 
     @Override
     public T save(T data) {
@@ -24,7 +24,7 @@ public abstract class SimpleDataRepository<T extends Entity, ID extends Long> im
             dataList.add(data);
         } else {
             // DB에 값이 없는 경우 -> create
-            data.setId(++index);
+            data.setId(index++);
             dataList.add(data);
         }
 
