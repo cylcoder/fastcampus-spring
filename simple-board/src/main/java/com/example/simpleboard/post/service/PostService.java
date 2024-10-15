@@ -2,14 +2,16 @@ package com.example.simpleboard.post.service;
 
 import com.example.simpleboard.board.db.BoardEntity;
 import com.example.simpleboard.board.db.BoardRepository;
-import com.example.simpleboard.board.service.BoardService;
+import com.example.simpleboard.common.Api;
+import com.example.simpleboard.common.Pagination;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
+import com.example.simpleboard.post.model.PostDto;
 import com.example.simpleboard.post.model.PostRequest;
 import com.example.simpleboard.post.model.PostViewRequest;
-import com.example.simpleboard.reply.db.ReplyEntity;
-import com.example.simpleboard.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +26,10 @@ import java.util.NoSuchElementException;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final ReplyService replyService;
     private final BoardRepository boardRepository;
+    private final PostConverter postConverter;
 
-    public PostEntity create(PostRequest postRequest) {
+    public PostDto create(PostRequest postRequest) {
         BoardEntity board = boardRepository.findById(postRequest.getBoardId()).orElseThrow(NoSuchElementException::new);
 
         PostEntity entity = PostEntity.builder()
@@ -41,26 +43,38 @@ public class PostService {
                 .postedAt(LocalDateTime.now())
                 .build();
 
-        return postRepository.save(entity);
+        return postConverter.toDto(postRepository.save(entity));
     }
 
-    public PostEntity view(PostViewRequest postViewRequest) {
+    public PostDto view(PostViewRequest postViewRequest) {
         Long postId = postViewRequest.getPostId();
-        PostEntity postEntity = postRepository.findFirstByIdAndStatusOrderByIdDesc(postId, "REGISTERED")
-                .orElseThrow(() -> new NoSuchElementException("No such post(post id: " + postId + ")"));
+        PostDto postDto = postConverter
+                .toDto(postRepository.findFirstByIdAndStatusOrderByIdDesc(postId, "REGISTERED")
+                .orElseThrow(() -> new NoSuchElementException("No such post(post id: " + postId + ")")));
 
-        if (postEntity.getPassword().equals(postViewRequest.getPassword())) {
-            List<ReplyEntity> replyList = replyService.findAllByPostId(postId);
-            postEntity.setReplyList(replyList);
-            return postEntity;
+        if (postDto.getPassword().equals(postViewRequest.getPassword())) {
+            return postDto;
         } else {
             throw new RuntimeException(String.format("Wrong password(Expected: %s, Actual: %s)",
-                    postEntity.getPassword(), postViewRequest.getPassword()));
+                    postDto.getPassword(), postViewRequest.getPassword()));
         }
     }
 
-    public List<PostEntity> all() {
-        return postRepository.findAllByStatusOrderByIdDesc("REGISTERED");
+    public Api<List<PostEntity>> all(Pageable pageable) {
+        Page<PostEntity> page = postRepository.findAll(pageable);
+
+        Pagination pagination = Pagination.builder()
+                .page(page.getNumber())
+                .size(page.getSize())
+                .currentElements(page.getNumberOfElements())
+                .totalPage(page.getTotalPages())
+                .totalElements(page.getTotalElements())
+                .build();
+
+        return Api.<List<PostEntity>>builder()
+                .body(page.stream().toList())
+                .pagination(pagination)
+                .build();
     }
 
     @PostMapping("/delete")

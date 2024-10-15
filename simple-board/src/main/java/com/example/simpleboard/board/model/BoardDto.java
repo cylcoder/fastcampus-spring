@@ -1,11 +1,6 @@
 package com.example.simpleboard.board.model;
 
-import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.model.PostDto;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

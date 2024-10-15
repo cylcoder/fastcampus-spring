@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class BoardEntity {
     private String status;
 
     @OneToMany(mappedBy = "board")
+    @SQLRestriction("status = 'REGISTERED'")
+    @OrderBy("postedAt DESC")
+    @Builder.Default
     private List<PostEntity> postList = new ArrayList<>();
 
 }

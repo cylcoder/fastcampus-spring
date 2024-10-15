@@ -5,6 +5,7 @@ import com.example.simpleboard.reply.db.ReplyEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,7 +42,9 @@ public class PostEntity {
 
     private LocalDateTime postedAt;
 
-    @Transient
+    @OneToMany(mappedBy = "post")
+    @SQLRestriction("status = 'REGISTERED'")
+    @Builder.Default
     private List<ReplyEntity> replyList = new ArrayList<>();
 
 }

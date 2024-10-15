@@ -1,30 +1,25 @@
-package com.example.simpleboard.post.model;
+package com.example.simpleboard.reply.model;
 
-import com.example.simpleboard.reply.model.ReplyDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class PostDto {
+public class ReplyDto {
 
     private Long id;
 
-    private Long boardId;
+    private Long postId;
 
     private String userName;
 
     private String password;
-
-    private String email;
 
     private String status;
 
@@ -32,8 +27,6 @@ public class PostDto {
 
     private String content;
 
-    private LocalDateTime postedAt;
-
-    private List<ReplyDto> replyList = new ArrayList<>();
+    private LocalDateTime repliedAt;
 
 }

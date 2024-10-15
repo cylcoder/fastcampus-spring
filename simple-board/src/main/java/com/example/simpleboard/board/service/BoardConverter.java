@@ -17,7 +17,9 @@ public class BoardConverter {
                 .id(boardEntity.getId())
                 .boardName(boardEntity.getBoardName())
                 .status(boardEntity.getStatus())
-                .postList(boardEntity.getPostList().stream().map(postConverter::toDto).toList())
+                .postList(boardEntity.getPostList().stream()
+                        .map(postConverter::toDto)
+                        .toList())
                 .build();
     }
 
