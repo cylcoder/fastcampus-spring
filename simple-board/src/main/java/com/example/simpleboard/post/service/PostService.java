@@ -4,6 +4,8 @@ import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.post.model.PostRequest;
 import com.example.simpleboard.post.model.PostViewRequest;
+import com.example.simpleboard.reply.db.ReplyEntity;
+import com.example.simpleboard.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.NoSuchElementException;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final ReplyService replyService;
 
     public PostEntity create(PostRequest postRequest) {
         PostEntity entity = PostEntity.builder()
@@ -41,6 +44,8 @@ public class PostService {
                 .orElseThrow(() -> new NoSuchElementException("No such post(post id: " + postId + ")"));
 
         if (postEntity.getPassword().equals(postViewRequest.getPassword())) {
+            List<ReplyEntity> replyList = replyService.findAllByPostId(postId);
+            postEntity.setReplyList(replyList);
             return postEntity;
         } else {
             throw new RuntimeException(String.format("Wrong password(Expected: %s, Actual: %s)",
