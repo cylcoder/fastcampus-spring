@@ -1,7 +1,11 @@
-package com.example.simpleboard.board.db;
+package com.example.simpleboard.board.model;
 
 import com.example.simpleboard.post.db.PostEntity;
-import jakarta.persistence.*;
+import com.example.simpleboard.post.model.PostDto;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,18 +18,14 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-@Entity(name = "board")
-public class BoardEntity {
+public class BoardDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String boardName;
 
     private String status;
 
-    @OneToMany(mappedBy = "board")
-    private List<PostEntity> postList = new ArrayList<>();
+    private List<PostDto> postList = new ArrayList<>();
 
 }

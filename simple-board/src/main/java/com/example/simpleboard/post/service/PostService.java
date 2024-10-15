@@ -1,5 +1,8 @@
 package com.example.simpleboard.post.service;
 
+import com.example.simpleboard.board.db.BoardEntity;
+import com.example.simpleboard.board.db.BoardRepository;
+import com.example.simpleboard.board.service.BoardService;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.post.model.PostRequest;
@@ -22,10 +25,13 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ReplyService replyService;
+    private final BoardRepository boardRepository;
 
     public PostEntity create(PostRequest postRequest) {
+        BoardEntity board = boardRepository.findById(postRequest.getBoardId()).orElseThrow(NoSuchElementException::new);
+
         PostEntity entity = PostEntity.builder()
-                .boardId(1L)
+                .board(board)
                 .userName(postRequest.getUserName())
                 .password(postRequest.getPassword())
                 .email(postRequest.getEmail())
