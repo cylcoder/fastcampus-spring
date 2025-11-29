@@ -1,6 +1,8 @@
 package com.example.restapi.controller;
 
 import com.example.restapi.model.BookQueryParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class RestApiController {
 
   @GetMapping("/hello")
@@ -27,7 +30,7 @@ public class RestApiController {
     System.out.println("isMan = " + isMan);
     return msg;
   }
-  
+
   @GetMapping("/book")
   public void queryParam(
       String category,
@@ -44,6 +47,14 @@ public class RestApiController {
   @GetMapping("/book2")
   public void queryParamDto(BookQueryParam bookQueryParam) {
     System.out.println("bookQueryParam = " + bookQueryParam);
+  }
+
+  @DeleteMapping(path = {
+      "/user/{username}",
+      "/user/{username}"
+  })
+  public void delete(@PathVariable String username) {
+    log.info("username={}", username);
   }
 
 }
