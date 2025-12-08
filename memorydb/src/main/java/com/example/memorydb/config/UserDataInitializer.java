@@ -1,8 +1,7 @@
-package com.example.memorydb;
+package com.example.memorydb.config;
 
 import com.example.memorydb.user.db.UserRepository;
 import com.example.memorydb.user.model.UserEntity;
-import jakarta.annotation.PostConstruct;
 import java.util.Random;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -25,4 +24,5 @@ public class UserDataInitializer implements CommandLineRunner {
       userRepository.save(user);
     }
   }
+
 }
