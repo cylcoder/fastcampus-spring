@@ -1,7 +1,7 @@
 package com.example.memorydb.config;
 
 import com.example.memorydb.user.db.UserRepository;
-import com.example.memorydb.user.model.UserEntity;
+import com.example.memorydb.user.model.User;
 import java.util.Random;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class UserDataInitializer implements CommandLineRunner {
     for (int i = 0; i < 5; i++) {
       String name = UUID.randomUUID().toString().substring(0, 5);
       int score = random.nextInt(100);
-      UserEntity user = new UserEntity(name, score);
+      User user = new User(name, score);
       userRepository.save(user);
     }
   }

@@ -1,21 +1,20 @@
 package com.example.memorydb.user.db;
 
-import com.example.memorydb.db.SimpleDataRepository;
-import com.example.memorydb.user.model.UserEntity;
+import com.example.memorydb.user.model.User;
 import java.util.List;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public class UserRepository extends SimpleDataRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-  public List<UserEntity> findByScoreGreaterThan(Integer score) {
-    if (score != null) {
-      return findAll().stream()
-          .filter(u -> u.getScore() > score)
-          .toList();
-    }
+  List<User> findAllByScoreGreaterThan(Integer score);
 
-    return findAll();
-  }
+  List<User> findAllByScoreBetweenV1(Integer min, Integer max);
+
+  @Query("SELECT u FROM User u WHERE u.score BETWEEN :min AND :max")
+  List<User> findAllByScoreBetweenV2(Integer min, Integer max);
+
+  @Query("SELECT * FROM users WHERE score BETWEEN ?1 AND ?2")
+  List<User> findAllByScoreBetweenV3(Integer min, Integer max);
 
 }

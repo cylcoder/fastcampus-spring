@@ -1,6 +1,6 @@
 package com.example.memorydb.book.db.service;
 
-import com.example.memorydb.book.db.entity.BookEntity;
+import com.example.memorydb.book.db.entity.Book;
 import com.example.memorydb.book.db.repository.BookRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,11 @@ public class BookService {
 
   private final BookRepository bookRepository;
 
-  public BookEntity create(BookEntity bookEntity) {
-    return bookRepository.save(bookEntity);
+  public Book create(Book book) {
+    return bookRepository.save(book);
   }
 
-  public List<BookEntity> findAll() {
+  public List<Book> findAll() {
     return bookRepository.findAll();
   }
 

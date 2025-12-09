@@ -1,6 +1,6 @@
 package com.example.memorydb.user.controller;
 
-import com.example.memorydb.user.model.UserEntity;
+import com.example.memorydb.user.model.User;
 import com.example.memorydb.user.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +21,18 @@ public class UserApiController {
   private final UserService userService;
 
   @PutMapping
-  public UserEntity create(@RequestBody UserEntity userEntity) {
-    return userService.save(userEntity);
+  public User create(@RequestBody User user) {
+    return userService.save(user);
   }
 
-  @GetMapping
-  public List<UserEntity> findAll(@RequestParam(required = false) Integer score) {
-    return userService.findByScoreGreaterThan(score);
+  @GetMapping(params = "score")
+  public List<User> findAllByScoreGreaterThan(Integer score) {
+    return userService.findAllByScoreGreaterThan(score);
+  }
+
+  @GetMapping(params = {"min", "max"})
+  public List<User> findAllByScoreBetween(Integer min, Integer max) {
+    return userService.findAllByScoreBetween(min, max);
   }
 
   @DeleteMapping("/{id}")
@@ -36,7 +41,7 @@ public class UserApiController {
   }
 
   @GetMapping("/{id}")
-  public UserEntity findById(@PathVariable Long id) {
+  public User findById(@PathVariable Long id) {
     return userService.findById(id)
         .orElse(null);
   }

@@ -1,6 +1,6 @@
 package com.example.memorydb.book.db.controller;
 
-import com.example.memorydb.book.db.entity.BookEntity;
+import com.example.memorydb.book.db.entity.Book;
 import com.example.memorydb.book.db.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ public class BookApiController {
   private final BookService bookService;
 
   @PostMapping
-  public BookEntity create(@RequestBody BookEntity bookEntity) {
-    return bookService.create(bookEntity);
+  public Book create(@RequestBody Book book) {
+    return bookService.create(book);
   }
 
   @GetMapping
-  public List<BookEntity> findAll() {
+  public List<Book> findAll() {
     return bookService.findAll();
   }
 

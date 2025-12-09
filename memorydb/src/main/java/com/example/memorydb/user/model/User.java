@@ -1,21 +1,34 @@
 package com.example.memorydb.user.model;
 
-import com.example.memorydb.entity.Entity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@jakarta.persistence.Entity
+@Entity
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Builder
-public class UserEntity extends Entity {
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   private String name;
+
   private int score;
+
+  public User(String name, int score) {
+    this.name = name;
+    this.score = score;
+  }
 
 }

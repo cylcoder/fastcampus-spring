@@ -2,7 +2,7 @@ package com.example.memorydb.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.memorydb.user.model.UserEntity;
+import com.example.memorydb.user.model.User;
 import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class UserServiceTest {
   private UserService userService;
 
   @Test
-  void findByScoreGreaterThan() {
+  void findAllByScoreGreaterThan() {
     Random random = new Random();
     int targetScore = 70;
     int count = 0;
@@ -29,11 +29,11 @@ class UserServiceTest {
       if (score >= targetScore) {
         count++;
       }
-      UserEntity user = new UserEntity("user" + i, score);
+      User user = new User("user" + i, score);
       userService.save(user);
     }
 
-    List<UserEntity> result = userService.findByScoreGreaterThan(targetScore);
+    List<User> result = userService.findAllByScoreGreaterThan(targetScore);
     assertThat(result).hasSize(count);
   }
 
