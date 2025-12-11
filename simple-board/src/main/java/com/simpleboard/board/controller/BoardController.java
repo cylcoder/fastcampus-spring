@@ -6,6 +6,7 @@ import com.simpleboard.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +18,8 @@ public class BoardController {
   private final BoardService boardService;
 
   @PostMapping
-  public Board create(@Valid BoardRequest request) {
-    return boardService.create(request);
+  public Board create(@Valid @RequestBody BoardRequest boardRequest) {
+    return boardService.create(boardRequest);
   }
 
 }
