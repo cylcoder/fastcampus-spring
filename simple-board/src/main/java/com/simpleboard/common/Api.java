@@ -21,4 +21,10 @@ public class Api<T> {
         .build();
   }
 
+  public static <U> Api<U> ok(U body) {
+    return Api.<U>builder()
+        .body(body)
+        .build();
+  }
+
 }

@@ -1,35 +1,29 @@
 package com.simpleboard.reply.service;
 
-import com.simpleboard.post.db.Post;
+import com.simpleboard.crud.CRUDService;
+import com.simpleboard.crud.Converter;
 import com.simpleboard.post.db.PostRepository;
 import com.simpleboard.reply.db.Reply;
 import com.simpleboard.reply.db.ReplyRepository;
 import com.simpleboard.reply.model.ReplyRequest;
 import com.simpleboard.reply.model.ReplyResponse;
-import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-public class ReplyService {
+public class ReplyService extends CRUDService<Reply, ReplyRequest, ReplyResponse> {
 
   private final ReplyRepository replyRepository;
   private final PostRepository postRepository;
+  private final Converter<Reply, ReplyRequest, ReplyResponse> converter;
 
-  public ReplyResponse save(ReplyRequest replyRequest) {
-    Post post = postRepository.findById(replyRequest.getPostId())
-        .orElseThrow();
-    Reply reply = ReplyRequest.toEntity(post, replyRequest);
-    Reply savedReply = replyRepository.save(reply);
-    return ReplyResponse.toDto(savedReply);
-  }
-
-  public List<ReplyResponse> findAllByPostId(Long postId) {
-    return replyRepository.findAllByPostIdOrderById(postId)
-        .stream()
-        .map(ReplyResponse::toDto)
-        .toList();
+  public ReplyService(
+      ReplyRepository replyRepository,
+      PostRepository postRepository,
+      Converter<Reply, ReplyRequest, ReplyResponse> converter) {
+    super(replyRepository, converter);
+    this.replyRepository = replyRepository;
+    this.postRepository = postRepository;
+    this.converter = converter;
   }
 
 }

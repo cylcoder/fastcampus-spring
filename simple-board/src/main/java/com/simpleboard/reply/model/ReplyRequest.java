@@ -37,7 +37,7 @@ public class ReplyRequest {
   @NotBlank
   private String content;
 
-  public static Reply toEntity(Post post, ReplyRequest replyRequest) {
+  public static Reply toEntity(ReplyRequest replyRequest, Post post) {
     return Reply.builder()
         .post(post)
         .username(replyRequest.getUsername())

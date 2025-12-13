@@ -19,7 +19,7 @@ public class Pagination {
   private Integer totalPages;
   private Long totalElements;
 
-  public static Pagination toDto(Page<Post> page) {
+  public static<T> Pagination toDto(Page<T> page) {
     return Pagination.builder()
         .page(page.getNumber())
         .size(page.getSize())
