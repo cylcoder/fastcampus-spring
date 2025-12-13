@@ -1,9 +1,8 @@
-package com.simpleboard.post.model;
+package com.simpleboard.reply.model;
 
 import com.simpleboard.common.Status;
-import com.simpleboard.board.db.Board;
 import com.simpleboard.post.db.Post;
-import jakarta.validation.constraints.Email;
+import com.simpleboard.reply.db.Reply;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,10 +19,10 @@ import tools.jackson.databind.annotation.JsonNaming;
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PostRequest {
+public class ReplyRequest {
 
   @NotNull
-  private Long boardId;
+  private Long postId;
 
   @NotBlank
   private String username;
@@ -33,25 +32,20 @@ public class PostRequest {
   private String password;
 
   @NotBlank
-  @Email
-  private String email;
-
-  @NotBlank
   private String title;
 
   @NotBlank
   private String content;
 
-  public static Post toEntity(PostRequest postRequest, Board board) {
-    return Post.builder()
-        .board(board)
-        .username(postRequest.getUsername())
-        .password(postRequest.getPassword())
-        .email(postRequest.getEmail())
+  public static Reply toEntity(Post post, ReplyRequest replyRequest) {
+    return Reply.builder()
+        .post(post)
+        .username(replyRequest.getUsername())
+        .password(replyRequest.getPassword())
+        .title(replyRequest.getTitle())
+        .content(replyRequest.getContent())
         .status(Status.REGISTERED)
-        .title(postRequest.getTitle())
-        .content(postRequest.getContent())
-        .postedAt(LocalDateTime.now())
+        .repliedAt(LocalDateTime.now())
         .build();
   }
 

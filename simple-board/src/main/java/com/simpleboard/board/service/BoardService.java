@@ -3,7 +3,7 @@ package com.simpleboard.board.service;
 import com.simpleboard.board.db.Board;
 import com.simpleboard.board.db.BoardRepository;
 import com.simpleboard.board.model.BoardRequest;
-import com.simpleboard.board.model.BoardStatus;
+import com.simpleboard.board.model.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +13,16 @@ public class BoardService {
 
   private final BoardRepository boardRepository;
 
-  public Board create(BoardRequest request) {
-    Board board = Board.builder()
-        .name(request.getName())
-        .status(BoardStatus.REGISTERED)
-        .build();
+  public BoardResponse create(BoardRequest boardRequest) {
+    Board board = BoardRequest.toEntity(boardRequest);
+    Board savedBoard = boardRepository.save(board);
+    return BoardResponse.toDto(savedBoard);
+  }
 
-    return boardRepository.save(board);
+  public BoardResponse findById(Long id) {
+    Board board = boardRepository.findById(id)
+        .orElseThrow();
+    return BoardResponse.toDto(board);
   }
 
 }

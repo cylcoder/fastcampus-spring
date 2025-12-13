@@ -1,5 +1,7 @@
 package com.simpleboard.board.model;
 
+import com.simpleboard.common.Status;
+import com.simpleboard.board.db.Board;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,5 +19,12 @@ public class BoardRequest {
 
   @NotBlank
   private String name;
+
+  public static Board toEntity(BoardRequest boardRequest) {
+    return Board.builder()
+        .name(boardRequest.getName())
+        .status(Status.REGISTERED)
+        .build();
+  }
 
 }

@@ -1,5 +1,6 @@
 package com.simpleboard.reply.db;
 
+import com.simpleboard.common.Status;
 import com.simpleboard.post.db.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +35,7 @@ public class Reply {
 
   private String password;
 
-  private String status;
+  private Status status;
 
   private String title;
 
