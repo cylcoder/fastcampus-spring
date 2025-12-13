@@ -20,22 +20,26 @@ public abstract class CRUDService<ENTITY, REQUEST, RESPONSE> implements CRUDInte
     return converter.toDto(entity);
   }
 
+  @Override
   public RESPONSE findById(Long id) {
     ENTITY entity = jpaRepository.findById(id)
         .orElseThrow();
     return converter.toDto(entity);
   }
 
+  @Override
   public RESPONSE update(REQUEST dto) {
     ENTITY entity = converter.toEntity(dto);
     ENTITY savedEntity = jpaRepository.save(entity);
     return converter.toDto(savedEntity);
   }
 
+  @Override
   public void deleteById(Long id) {
     jpaRepository.deleteById(id);
   }
 
+  @Override
   public PageResponse<RESPONSE> findAll(Pageable pageable) {
     Page<ENTITY> page = jpaRepository.findAll(pageable);
     List<RESPONSE> body = page.stream()
