@@ -1,7 +1,7 @@
 package com.simpleboard.board.model;
 
-import com.simpleboard.common.Status;
 import com.simpleboard.board.db.Board;
+import com.simpleboard.common.Status;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

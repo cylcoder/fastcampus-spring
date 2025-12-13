@@ -1,6 +1,5 @@
 package com.simpleboard.common;
 
-import com.simpleboard.post.db.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

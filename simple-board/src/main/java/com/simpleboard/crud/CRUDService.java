@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
 public abstract class CRUDService<ENTITY, REQUEST, RESPONSE> implements CRUDInterface<ENTITY, REQUEST, RESPONSE> {
 

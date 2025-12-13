@@ -19,7 +19,8 @@ public class ReplyService extends CRUDService<Reply, ReplyRequest, ReplyResponse
   public ReplyService(
       ReplyRepository replyRepository,
       PostRepository postRepository,
-      Converter<Reply, ReplyRequest, ReplyResponse> converter) {
+      Converter<Reply, ReplyRequest, ReplyResponse> converter
+  ) {
     super(replyRepository, converter);
     this.replyRepository = replyRepository;
     this.postRepository = postRepository;

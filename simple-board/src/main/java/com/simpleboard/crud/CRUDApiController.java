@@ -3,7 +3,6 @@ package com.simpleboard.crud;
 import com.simpleboard.common.Api;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
